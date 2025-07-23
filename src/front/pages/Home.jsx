@@ -1,10 +1,15 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { BrowserRouter } from "react-router-dom";
+import Form from "./Form";
+import { Navigate } from "react-router-dom";
 
 export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
+
+	console.log('se cargo home')
 
 	const loadMessage = async () => {
 		try {
@@ -19,7 +24,8 @@ export const Home = () => {
 
 			return data
 
-		} catch (error) {
+		} 
+		catch (error) {
 			if (error.message) throw new Error(
 				`Could not fetch the message from the backend.
 				Please check if the backend is running and the backend port is public.`
@@ -33,11 +39,16 @@ export const Home = () => {
 	}, [])
 
 	return (
+		
+
+
 		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
+
+		{store.auth==true ? <Navigate to='demo'/> : <Form />}
+		
+		
+			
+			
 			<div className="alert alert-info">
 				{store.message ? (
 					<span>{store.message}</span>

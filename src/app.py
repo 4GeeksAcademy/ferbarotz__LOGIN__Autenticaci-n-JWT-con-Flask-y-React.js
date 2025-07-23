@@ -45,7 +45,7 @@ setup_admin(app)
 setup_commands(app)
 
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config["JWT_SECRET_KEY"] = "super-secret debe ser algo muy largo"  # Change this!
 jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix

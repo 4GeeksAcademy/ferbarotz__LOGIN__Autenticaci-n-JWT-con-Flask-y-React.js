@@ -27,6 +27,22 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+# #-------TEST-------
+# @api.route('/test', methods=['POST', 'GET'])
+# def test():
+
+#     response_body = {
+#         "message": "test"
+#     }
+
+#     return jsonify(response_body), 200
+
+# #USUARIO
+
+
+
+#-------TEST------- 
+
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -45,4 +61,21 @@ def login():
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+
+@api.route("/signup", methods=["POST"])
+def signup():
+    body=request.get_json()
+    user = User.query.filter_by(email=body["email"]).first()
+
+    if user is not None: 
+        return jsonify({"msg": "ya se encontro un usuario con este correo"}), 401
+
+    user =User(email=body['email'],password=body['password'],is_active=True)
+    db.session.add(user)
+    db.session.commit()
+    response_body={
+        "msg":"Usuario creado"
+    }
+    return jsonify(response_body), 200
 
